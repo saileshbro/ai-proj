@@ -58,7 +58,7 @@ For detailed understanding, please refer to the following documentation files:
 
 ```bash
 # Clone the repository
-git clone [your-repo-url]
+git clone https://github.com/saileshbro/ai-proj
 
 # Install dependencies
 pip install -r requirements.txt
@@ -94,10 +94,6 @@ jupyter notebook model_training.ipynb
 - [Nepali NLP Resources](https://github.com/sushil79g/Nepali_nlp)
 - [Nepali Language Processing Group](https://github.com/nlp-nepal)
 
-## Contributors 👥
-
-[List of contributors]
-
 ## Support & Community 🤝
 
 - Create an issue for bugs/features
@@ -113,12 +109,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - Hugging Face team for BERT implementation
 - PyTorch community
 - Contributors to the Nepali language datasets
-- [Add other acknowledgments]
-
-## Citation 📚
-
-If you use this project in your research, please cite:
-
-```bibtex
-[Add citation information]
-```
