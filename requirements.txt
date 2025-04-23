@@ -1,0 +1,13 @@
+torch>=1.9.0
+transformers>=4.12.0
+pandas>=1.3.0
+numpy>=1.19.5
+matplotlib>=3.4.3
+tqdm>=4.62.3
+scikit-learn>=0.24.2
+fastapi>=0.68.0  # For API deployment
+uvicorn>=0.15.0  # For running FastAPI
+pydantic>=1.8.2  # For data validation
+zipfile36>=0.1.3  # For model compression
+python-multipart>=0.0.5  # For FastAPI file uploads
+psutil>=5.8.0  # For system memory checks
