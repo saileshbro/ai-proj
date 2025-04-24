@@ -8,11 +8,11 @@ import sys
 import torch
 from transformers import BertForSequenceClassification, AutoTokenizer
 
-def load_model(model_path='./trained_model'):
+def load_model(model_path='./model'):
     """Load the trained model and tokenizer"""
     try:
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
         model = BertForSequenceClassification.from_pretrained(model_path)
-        tokenizer = AutoTokenizer.from_pretrained('bert-base-multilingual-cased')
         return model, tokenizer
     except Exception as e:
         print(f"Error loading model: {str(e)}")
