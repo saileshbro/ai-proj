@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Nepali Sentiment Analysis Inference Script
 Usage: python predict.py "तपाईंको फिल्म राम्रो छ"
@@ -6,21 +7,24 @@ Usage: python predict.py "तपाईंको फिल्म राम्र�
 
 import sys
 import torch
-from transformers import BertForSequenceClassification, AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-def load_model(model_path='./model'):
-    """Load the trained model and tokenizer"""
+MODEL_PATH = "./model"  # Update this if your model is in a different path
+
+
+def load_model(model_path=MODEL_PATH):
+    """Load the fine-tuned model and tokenizer from disk"""
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
-        model = BertForSequenceClassification.from_pretrained(model_path)
+        tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)  # force slow tokenizer
+        model = AutoModelForSequenceClassification.from_pretrained(model_path)
         return model, tokenizer
     except Exception as e:
-        print(f"Error loading model: {str(e)}")
+        print(f"Failed to load model from '{model_path}': {e}")
         sys.exit(1)
 
+
 def predict_sentiment(text, model, tokenizer):
-    """Predict sentiment for given Nepali text"""
-    # Prepare input
+    """Return sentiment label for input Nepali text"""
     inputs = tokenizer(
         text,
         return_tensors="pt",
@@ -29,38 +33,36 @@ def predict_sentiment(text, model, tokenizer):
         max_length=512
     )
 
-    # Make prediction
     model.eval()
     with torch.no_grad():
         outputs = model(**inputs)
-        prediction = torch.argmax(outputs.logits, dim=1)
+        logits = outputs.logits
+        predicted_class = torch.argmax(logits, dim=1).item()
 
-    # Map prediction to sentiment
-    sentiment_map = {0: "Negative 😞", 1: "Positive 😊", 2: "Neutral 😐"}
-    return sentiment_map[prediction.item()]
+    sentiment_map = {
+        0: "Negative",
+        1: "Positive",
+        2: "Neutral"
+    }
+
+    return sentiment_map.get(predicted_class, "Unknown")
 
 def main():
-    """Main function"""
-    # Check command line arguments
     if len(sys.argv) != 2:
-        print("Usage: python predict.py \"तपाईंको फिल्म राम्रो छ\"")
+        print("Usage: python predict.py \"Nepali sentence here\"")
         sys.exit(1)
 
-    # Get input text
     text = sys.argv[1]
 
-    # Load model
     print("Loading model...")
     model, tokenizer = load_model()
 
-    # Make prediction
-    print("\nAnalyzing text...")
+    print("\nAnalyzing...")
     sentiment = predict_sentiment(text, model, tokenizer)
 
-    # Print results
-    print("\nResults:")
+    print("\nResult:")
     print(f"Text: {text}")
-    print(f"Sentiment: {sentiment}")
+    print(f"Predicted Sentiment: {sentiment}")
 
 if __name__ == "__main__":
     main()
