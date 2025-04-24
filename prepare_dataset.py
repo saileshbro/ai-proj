@@ -58,7 +58,11 @@ def process_aayamoza_dataset(folder_path="datasets/aayamoza"):
             df["label"] = pd.to_numeric(df["label"], errors="coerce")
             df = df.dropna(subset=["label"])
 
-            # Labels are already -1 (negative), 0 (neutral), and 1 (positive)
+            # Map original labels to our new scheme:
+            # -1 (negative) -> 0 (negative)
+            # 0 (neutral) -> 2 (neutral)
+            # 1 (positive) -> 1 (positive)
+            df["label"] = df["label"].replace({-1: 0, 0: 2, 1: 1})
 
             # Add source information
             df["source"] = "aayamoza"
@@ -132,8 +136,7 @@ def process_ajhesh7_dataset(folder_path="datasets/ajhesh7"):
             df["label"] = pd.to_numeric(df["label"], errors="coerce")
             df = df.dropna(subset=["label"])
 
-            # Map 0, 1, 2 to -1, 1, 0 as specified
-            df["label"] = df["label"].replace({0: -1, 1: 1, 2: 0})
+            # No mapping needed - ajhesh7 already uses 0 (negative), 1 (positive), and 2 (neutral)
 
             # Add source information
             df["source"] = "ajhesh7"
@@ -201,8 +204,11 @@ def process_shushant_dataset(folder_path="datasets/shushant"):
             df["label"] = pd.to_numeric(df["label"], errors="coerce")
             df = df.dropna(subset=["label"])
 
-            # Map 0, 1, 2 to -1, 1, 0 as specified
-            df["label"] = df["label"].replace({0: -1, 1: 1, 2: 0})
+            # The dataset already uses the desired mapping:
+            # 0 (negative) -> 0 (negative)
+            # 1 (positive) -> 1 (positive)
+            # 2 (neutral) -> 2 (neutral)
+            # No mapping needed
 
             # Add source information
             df["source"] = "shushant"
@@ -297,8 +303,11 @@ def process_smahesh_dataset(folder_path="datasets/smahesh"):
             df["label"] = pd.to_numeric(df["label"], errors="coerce")
             df = df.dropna(subset=["label"])
 
-            # Map 1, 2 to 1, 0 as specified (smahesh doesn't have 0 label for negative)
-            df["label"] = df["label"].replace({1: 1, 2: 0})
+            # Map the smahesh labels to our new scheme:
+            # 0 (negative) - not present in the dataset
+            # 1 (positive) -> 1 (positive)
+            # 2 (neutral) -> 2 (neutral)
+            # No mapping needed as the scheme already aligns with our desired output
 
             # Add source information
             df["source"] = "smahesh"
@@ -355,8 +364,8 @@ def prepare_dataset():
     # Remove duplicates
     df = df.drop_duplicates(subset=["text"])
 
-    # Ensure label values are correct (-1, 0, 1)
-    valid_labels = [-1, 0, 1]
+    # Ensure label values are correct (0, 1, 2)
+    valid_labels = [0, 1, 2]  # 0 (negative), 1 (positive), 2 (neutral)
     invalid_labels = [label for label in df["label"].unique() if label not in valid_labels]
     if invalid_labels:
         print(f"Warning: Found invalid labels {invalid_labels}. These will be removed.")
