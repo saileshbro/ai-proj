@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from fastapi import Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import torch
-from transformers import BertForSequenceClassification, AutoTokenizer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from contextlib import asynccontextmanager
 
 import os
@@ -19,8 +22,9 @@ tokenizer = None
 async def lifespan(app: FastAPI):
     global model, tokenizer
     try:
-        model = BertForSequenceClassification.from_pretrained(MODEL_PATH)
-        tokenizer = AutoTokenizer.from_pretrained('bert-base-multilingual-cased')
+        model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+        # Force use of slow tokenizer to avoid protobuf dependency issues
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, use_fast=False)
         model.eval()
         print("Model loaded successfully.")
     except Exception as e:
@@ -36,6 +40,9 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Set up the templates
+templates = Jinja2Templates(directory="templates")
+
 class SentimentRequest(BaseModel):
     text: str
 
@@ -44,12 +51,9 @@ class SentimentResponse(BaseModel):
     sentiment: str
     score: float
 
-@app.get("/")
-async def root():
-    return {
-        "message": "Nepali Sentiment Analysis API",
-        "usage": "POST /predict with JSON body: {'text': 'तपाईंको फिल्म राम्रो छ'}"
-    }
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/predict", response_model=SentimentResponse)
 async def predict_sentiment(request: SentimentRequest):
@@ -64,8 +68,9 @@ async def predict_sentiment(request: SentimentRequest):
 
         with torch.no_grad():
             outputs = model(**inputs)
-            probabilities = torch.softmax(outputs.logits, dim=1)
-            prediction = torch.argmax(outputs.logits, dim=1)
+            # Apply softmax to get proper probabilities
+            probabilities = torch.nn.functional.softmax(outputs.logits, dim=1)
+            prediction = torch.argmax(probabilities, dim=1)
             confidence = torch.max(probabilities).item()
 
         sentiment_map = {0: "Negative", 1: "Positive", 2: "Neutral"}

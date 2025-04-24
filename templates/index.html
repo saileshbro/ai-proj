@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nepali Sentiment Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Poppins", "sans-serif"],
+          },
+          colors: {
+            primary: {
+              50: "#f0f9ff",
+              100: "#e0f2fe",
+              200: "#bae6fd",
+              300: "#7dd3fc",
+              400: "#38bdf8",
+              500: "#0ea5e9",
+              600: "#0284c7",
+              700: "#0369a1",
+              800: "#075985",
+              900: "#0c4a6e",
+            },
+          },
+        },
+      },
+            };
+          </script>
+        <style>
+          /* Base Styles */
+          .text-area-height {
+            height: 120px;
+            transition: height 0.3s ease, box-shadow 0.3s ease;
+          }
+
+    .text-area-height:focus {
+      height: 150px;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+    }
+
+    /* Gradient Background */
+    .gradient-bg {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7, #075985);
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+
+    /* Animations */
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .emoji {
+      font-size: 3.5rem;
+      line-height: 1;
+      display: inline-block;
+      transform-origin: center;
+    }
+
+    .emoji-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .emoji-container:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .emoji-container:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .result-emoji {
+      font-size: 3.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(14, 165, 233, 0.2);
+      border-radius: 50%;
+      border-left-color: #0ea5e9;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-animation {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .result-appear {
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .shake-animation {
+      animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    @keyframes shake {
+
+      10%,
+      90% {
+        transform: translateX(-1px);
+      }
+
+      20%,
+      80% {
+        transform: translateX(2px);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translateX(-4px);
+      }
+
+      40%,
+      60% {
+        transform: translateX(4px);
+      }
+    }
+
+    .feature-card {
+      transition: all 0.3s ease-out;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    @media (max-width: 375px) {
+      .text-area-height {
+        height: 100px;
+      }
+
+      .emoji {
+        font-size: 2.5rem;
+      }
+
+      .emoji-container {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 overflow-hidden">
+  <div class="h-screen w-screen flex flex-col">
+    <main class="flex-1 flex">
+      <!-- Left Panel -->
+      <div class="gradient-bg w-2/5 p-10 text-white hidden lg:flex flex-col justify-between">
+        <div class="max-w-md space-y-6">
+          <h1 class="text-4xl font-bold font-display leading-tight">
+            Nepali Sentiment Analysis
+          </h1>
+          <p class="text-lg opacity-90">
+            Discover the emotional tone of Nepali text through our advanced AI
+            analysis tool.
+          </p>
+        </div>
+        <div class="mb-8">
+          <div class="flex items-center justify-center space-x-8">
+            <div class="emoji-container">
+              <span class="emoji">😊</span>
+            </div>
+            <div class="emoji-container">
+              <span class="emoji">😐</span>
+            </div>
+            <div class="emoji-container">
+              <span class="emoji">😔</span>
+            </div>
+            </div>
+            </div>
+            </div>
+      <!-- Right Panel -->
+      <div class="flex-1 overflow-auto bg-white p-6 lg:p-10 my-auto">
+        <!-- Mobile Header -->
+        <div class="lg:hidden text-center mb-8">
+          <h1 class="text-3xl font-bold font-display text-primary-700 mb-2">
+            Nepali Sentiment Analysis
+          </h1>
+          <p class="text-sm text-gray-600">
+            Analyze the emotional tone of Nepali text
+          </p>
+        </div>
+
+        <!-- Analyzer Card -->
+        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-6">
+            <h2 class="text-2xl font-bold text-white font-display">
+              Sentiment Analyzer
+            </h2>
+            <p class="text-primary-100 text-sm">
+              Enter your Nepali text below to analyze its emotional tone
+            </p>
+            </div>
+
+          <div class="p-6">
+            <div class="mb-6 relative">
+              <textarea id="text-input"
+                class="w-full p-4 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-slate-50 text-area-height"
+                placeholder="कृपया नेपाली पाठ यहाँ प्रविष्ट गर्नुहोस्..."></textarea>
+              <div class="absolute right-4 bottom-4 text-xs text-gray-400" id="char-count">
+                0 characters
+              </div>
+              </div>
+
+            <div class="text-center">
+              <button id="analyze-button"
+                class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-300 shadow-md hover:shadow-lg font-medium text-base hover:-translate-y-0.5 active:translate-y-0">
+                Analyze Sentiment
+              </button>
+              </div>
+
+            <!-- Results Container -->
+            <div id="result" class="mt-8 hidden">
+              <div class="bg-slate-50 rounded-2xl p-6 shadow-lg border border-gray-100 result-appear">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                  <div class="result-emoji mb-3 md:mb-0" id="sentiment-emoji"></div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h3 class="text-sm text-gray-600 mb-1">Sentiment:</h3>
+                        <div class="font-bold text-2xl md:text-3xl mb-3" id="sentiment-text"></div>
+                        </div>
+                        <div class="bg-white py-2 px-4 rounded-full shadow-md" id="confidence-container">
+                        <div class="text-xs text-gray-500 mb-1">
+                          Confidence
+                        </div>
+                        <div class="font-bold" id="confidence-score"></div>
+                        </div>
+                        </div>
+
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="confidence-bar" class="bg-primary-600 h-2.5 rounded-full" style="width: 0%"></div>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="mt-8 text-center hidden loading-animation">
+              <div class="inline-block">
+                <div class="loader"></div>
+                </div>
+              <p class="mt-4 text-primary-800 font-medium">
+                Analyzing your text...
+              </p>
+              </div>
+
+            <!-- Error State -->
+            <div id="error" class="mt-8 hidden shake-animation">
+              <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                <div class="text-red-600 text-lg font-medium mb-2">
+                  Oops! An error occurred
+                </div>
+                <p class="text-red-500">
+                  We couldn't analyze your text. Please try again later.
+                </p>
+                </div>
+                </div>
+                </div>
+                </div>
+
+        <!-- Features Section -->
+        <div class="max-w-2xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 feature-card">
+            <div class="text-primary-600 text-2xl mb-3">⚡</div>
+            <h3 class="font-bold text-base mb-2">Fast Analysis</h3>
+            <p class="text-gray-600 text-sm">
+              Get results in seconds with our optimized model.
+            </p>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 feature-card">
+            <div class="text-primary-600 text-2xl mb-3">🎯</div>
+            <h3 class="font-bold text-base mb-2">Accurate Results</h3>
+            <p class="text-gray-600 text-sm">
+              Trained on diverse Nepali language datasets.
+            </p>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 feature-card">
+            <div class="text-primary-600 text-2xl mb-3">🔒</div>
+            <h3 class="font-bold text-base mb-2">Privacy Focused</h3>
+            <p class="text-gray-600 text-sm">
+              Your text is processed securely and never stored.
+            </p>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="max-w-2xl mx-auto mt-10 text-center text-sm text-gray-500">
+          <p>&copy; 2025 Nepali Sentiment Analysis. All rights reserved.</p>
+        </footer>
+      </div>
+    </main>
+    </div>
+
+  <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              // DOM Elements
+              const analyzeButton = document.getElementById("analyze-button");
+              const textInput = document.getElementById("text-input");
+              const resultDiv = document.getElementById("result");
+              const loadingDiv = document.getElementById("loading");
+              const errorDiv = document.getElementById("error");
+              const emojiElement = document.getElementById("sentiment-emoji");
+              const sentimentElement = document.getElementById("sentiment-text");
+              const confidenceElement = document.getElementById("confidence-score");
+              const confidenceBar = document.getElementById("confidence-bar");
+              const charCount = document.getElementById("char-count");
+              const featureCards = document.querySelectorAll(".feature-card");
+
+              // Feature cards animation
+              featureCards.forEach((card, index) => {
+                card.style.opacity = "0";
+                card.style.transform = "translateY(20px)";
+
+                setTimeout(() => {
+                  card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+                  card.style.opacity = "1";
+                  card.style.transform = "translateY(0)";
+                }, 300 + index * 150);
+              });
+
+            // Update character count
+            textInput.addEventListener("input", function () {
+              const count = textInput.value.length;
+            charCount.textContent = `${count} character${count !== 1 ? "s" : ""}`;
+
+            const intensity = Math.min(count / 100, 1) * 15;
+            textInput.style.boxShadow = `0 0 ${intensity}px rgba(14, 165, 233, 0.2)`;
+
+            if (
+              this.value.length > 10 &&
+              !analyzeButton.classList.contains("pulse-once")
+            ) {
+              analyzeButton.classList.add("pulse-once");
+              analyzeButton.style.animation = "pulse 1s ease-in-out";
+
+              setTimeout(() => {
+                analyzeButton.style.animation = "";
+                analyzeButton.classList.remove("pulse-once");
+              }, 1000);
+            }
+          });
+
+            // Text input focus effects
+            textInput.addEventListener("focus", function () {
+              this.parentElement.classList.add("scale-105");
+              this.parentElement.style.transition = "transform 0.3s ease";
+            });
+
+            textInput.addEventListener("blur", function () {
+              this.parentElement.classList.remove("scale-105");
+            });
+
+            // Button hover effects
+            analyzeButton.addEventListener("mouseenter", function () {
+              this.classList.add("shadow-lg");
+            });
+
+            analyzeButton.addEventListener("mouseleave", function () {
+              this.classList.remove("shadow-lg");
+            });
+
+            // Analyze sentiment
+            async function analyzeSentiment() {
+              const text = textInput.value.trim();
+
+            if (!text) {
+            textInput.classList.add("ring-2", "ring-red-500", "border-red-500");
+            textInput.style.animation =
+              "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
+
+            setTimeout(() => {
+            textInput.classList.remove(
+              "ring-2",
+              "ring-red-500",
+              "border-red-500"
+            );
+            textInput.style.animation = "";
+          }, 1500);
+            return;
+          }
+
+            loadingDiv.classList.remove("hidden");
+            resultDiv.classList.add("hidden");
+            errorDiv.classList.add("hidden");
+            analyzeButton.disabled = true;
+            analyzeButton.classList.add("opacity-70");
+
+            try {
+            // Call the actual API endpoint
+            const response = await fetch("/predict", {
+              method: "POST",
+              headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text }),
+          });
+
+            if (!response.ok) {
+            throw new Error("API response was not ok");
+          }
+
+            const data = await response.json();
+
+            // Display sentiment with emoji
+            let emoji = "😐";
+            let textColor = "text-amber-600";
+            let barColor = "bg-amber-600";
+
+            if (data.sentiment === "Positive") {
+              emoji = "😊";
+              textColor = "text-green-600";
+              barColor = "bg-green-600";
+            } else if (data.sentiment === "Negative") {
+              emoji = "😔";
+              textColor = "text-red-600";
+              barColor = "bg-red-600";
+            }
+
+            emojiElement.textContent = emoji;
+            sentimentElement.textContent = data.sentiment;
+            sentimentElement.className = `font-bold text-2xl md:text-3xl ${textColor}`;
+
+            // Format confidence score as percentage
+            const confidence = Math.round(data.score * 100);
+            confidenceElement.textContent = `${confidence}%`;
+
+            // Update confidence bar with animation
+            confidenceBar.style.width = "0%";
+            confidenceBar.className = `h-2.5 rounded-full ${barColor}`;
+
+            setTimeout(() => {
+            confidenceBar.style.transition = "width 0.8s ease-in-out";
+            confidenceBar.style.width = `${confidence}%`;
+          }, 100);
+
+            loadingDiv.classList.add("hidden");
+            resultDiv.classList.remove("hidden");
+          } catch (error) {
+            console.error("Error:", error);
+            loadingDiv.classList.add("hidden");
+            errorDiv.classList.remove("hidden");
+          } finally {
+            analyzeButton.disabled = false;
+              analyzeButton.classList.remove("opacity-70");
+            }
+          }
+
+            analyzeButton.addEventListener("click", analyzeSentiment);
+
+            textInput.addEventListener("keypress", function (event) {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                analyzeSentiment();
+              }
+            });
+        });
+    </script>
+</body>
+
+</html>
