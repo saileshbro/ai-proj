@@ -1,0 +1,38 @@
+{
+  "files.exclude": {
+    "**/*.aux": true,
+    "**/*.fdb_latexmk": true,
+    "**/*.fls": true,
+    "**/*.log": true,
+    "**/*.nav": true,
+    "**/*.out": true,
+    "**/*.snm": true,
+    "**/*.synctex.gz": true,
+    "**/*.toc": true,
+    "**/*.vrb": true,
+    "**/*.xdv": true,
+    "**/*.pdf": false,
+    "**/*.tex": false
+  },
+  "explorer.excludeGitIgnore": false, // Ensure files in .gitignore are not excluded,
+  "latex-workshop.formatting.latex": "latexindent",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-pdf",
+        "-interaction=nonstopmode",
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk 🔃",
+      "tools": [
+        "latexmk"
+      ]
+    }
+  ]
+}
