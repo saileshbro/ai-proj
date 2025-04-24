@@ -1,23 +1,199 @@
 \documentclass[aspectratio=169]{beamer}
 
-\usepackage{fontspec}
+% Bibliography
 \usepackage[backend=biber,style=apa]{biblatex}
-
 \addbibresource{refs.bib}
 
-\usepackage{unicode-math}
-
+% Math and Graphics
 \usepackage{amsmath}
 \usepackage{tikz}
 \usetheme{metropolis}
 
-
-\title{Nepali Sentiment analysis}
-\author{Sailesh Dahal \and Sarayu Gautam \and Tohfa Niraula \and Amulya Bhandari}
-
+% Title Info
+\title{Nepali Sentiment Analysis of Post Covid Data}
+\subtitle{Using BERT for Text Classification}
+\author{Amulya Bhandari \and Sailesh Dahal \and Sarayu Gautam \and Tohfa Niraula}
+\institute{Department of Computer Engineering\\Kathmandu University}
 \date{\today}
 
 \begin{document}
+
+% Title Slide
 \maketitle
+
+% Outline
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+% Introduction
+\section{Introduction}
+\begin{frame}{What is Sentiment Analysis?}
+  \begin{itemize}
+    \item Sentiment analysis is an NLP task that classifies text based on emotion or opinion.
+    \item Common categories:
+    \begin{itemize}
+      \item Positive — praise, agreement
+      \item Neutral — factual or no emotion
+      \item Negative — criticism, disagreement
+    \end{itemize}
+    \item Applications:
+    \begin{itemize}
+      \item Product reviews
+      \item Social media monitoring
+      \item Survey analysis
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% Problem Statement
+\section{Problem Statement}
+\begin{frame}{What Are We Solving?}
+  \begin{itemize}
+    \item Goal: Classify Nepali-language text into sentiment categories.
+    \item Why Nepali?
+    \begin{itemize}
+      \item Underrepresented in NLP research
+      \item Fewer labeled datasets and tools available
+    \end{itemize}
+    \item Focus of project:
+    \begin{enumerate}
+      \item Clean and preprocess Nepali text data
+      \item Train a multilingual BERT model
+      \item Evaluate classification performance
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+% Dataset Description
+\section{Dataset Description}
+\begin{frame}{About the Dataset}
+  \begin{itemize}
+    \item Source: Two CSV files — train.csv and test.csv
+    \item Each row includes:
+    \begin{itemize}
+      \item Text — sentence in Nepali
+      \item Label — 0 (Negative), 1 (Positive), 2 (Neutral)
+    \end{itemize}
+    \item Data issues:
+    \begin{itemize}
+      \item Missing values and malformed entries
+      \item Invalid labels such as "-", "o"
+      \item Non-standard characters or encoding problems
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% Preprocessing
+\section{Data Preprocessing}
+\begin{frame}{Cleaning and Preparing the Data}
+  Steps we took to clean the dataset:
+  \begin{enumerate}
+    \item Dropped rows with missing or empty text.
+    \item Removed invalid labels.
+    \item Converted label strings to integers.
+    \item Tokenized text using a pretrained BERT tokenizer.
+  \end{enumerate}
+  Result: A clean, structured dataset suitable for training.
+\end{frame}
+
+% Tokenization
+\section{Tokenization and Encoding}
+\begin{frame}{Using BERT Tokenizer}
+  Why tokenization?
+  \begin{itemize}
+    \item Machine learning models require numerical input.
+    \item Tokenizer converts words/subwords into integer IDs.
+  \end{itemize}
+
+  In our project:
+  \begin{itemize}
+    \item Tool used: Hugging Face’s tokenizer (bert-base-multilingual-cased)
+    \item Features:
+    \begin{itemize}
+      \item Handles over 100 languages including Nepali
+      \item Supports padding/truncation (max length: 512)
+      \item Generates attention masks for input sequences
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% Model Architecture
+\section{Model Architecture}
+\begin{frame}{BERT for Sequence Classification}
+  Model details:
+  \begin{itemize}
+    \item Base: Pretrained BERT model from Hugging Face Transformers
+    \item Head: Fully connected classification layer with softmax activation
+    \item Output: Probability distribution over three classes
+  \end{itemize}
+
+  Why use BERT?
+  \begin{itemize}
+    \item Captures contextual meaning using attention mechanisms
+    \item Multilingual support makes it suitable for Nepali text
+  \end{itemize}
+\end{frame}
+
+% Training Pipeline
+\section{Training Pipeline}
+\begin{frame}{Training Configuration}
+  Important training settings:
+  \begin{itemize}
+    \item Optimizer: AdamW (with weight decay)
+    \item Learning rate: \(2\times10^{-5}\)
+    \item Batch size: 16
+    \item Epochs: 10
+    \item Loss function: Cross-entropy loss
+  \end{itemize}
+
+  Training implementation:
+  \begin{itemize}
+    \item PyTorch framework with GPU support (if available)
+    \item DataLoader used for efficient batching and shuffling
+  \end{itemize}
+\end{frame}
+
+% Challenges Faced
+\section{Challenges Faced}
+\begin{frame}{What Were the Difficulties?}
+  Challenges encountered during development:
+  \begin{enumerate}
+    \item Limited dataset size → overfitting risk
+    \item Noisy labels → needed extensive cleaning
+    \item Imbalanced classes → biased model predictions
+    \item No validation set → difficult to monitor performance during training
+  \end{enumerate}
+\end{frame}
+
+% Future Work
+\section{Future Work}
+\begin{frame}{Next Steps and Improvements}
+  Planned improvements:
+  \begin{enumerate}
+    \item Add a proper validation set for tuning.
+    \item Use metrics like F1-score and confusion matrix.
+    \item Try models like XLM-Roberta or mMiniLM.
+    \item Apply hyperparameter tuning and early stopping.
+    \item Deploy the model via API or web interface.
+  \end{enumerate}
+\end{frame}
+
+% Final Slide
+\begin{frame}{Thank You!}
+  Questions or feedback?
+
+  Project Resources:
+  \begin{itemize}
+    \item GitHub Repository:
+
+          {\small\texttt{\href{https://github.com/saileshbro/ai-proj}{github.com/saileshbro/ai-proj}}}
+
+    % Uncomment if you want to show email contact:
+    %\item Email: your.email@example.com
+  \end{itemize}
+
+  We appreciate your time and attention!
+\end{frame}
 
 \end{document}
