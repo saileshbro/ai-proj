@@ -150,13 +150,7 @@
 \section{Results}
 \begin{frame}{Loss and Accuracy Over Epochs}
   \centering
-  \includegraphics[width=0.45\linewidth]{training_metrics.png}
-
-  Observations:
-  \begin{itemize}
-    \item Loss decreased steadily.
-    \item Accuracy reached ~93.3% on training set at epoch 10.
-  \end{itemize}
+  \includegraphics[width=0.75\linewidth]{training_metrics.png}
 \end{frame}
 
 % Classification Report
@@ -185,10 +179,7 @@
 % Confusion Matrix Image (Optional)
 \begin{frame}{Confusion Matrix (Test Set)}
   \centering
-  \includegraphics[width=0.45\linewidth]{confusion_matrix.png}
-
-  Interpretation:
-  Some overlap between Neutral and other classes → expected in real-world data.
+  \includegraphics[width=0.65\linewidth]{confusion_matrix.png}
 \end{frame}
 
 % Sample Predictions Table (Optional)
@@ -203,7 +194,7 @@
   Key Takeaways:
   \begin{itemize}
     \item Trained a sentiment classifier on Nepali-language text using XLM-Roberta.
-    \item Achieved ~74% accuracy on test set.
+    \item Achieved ~74\% of overall accuracy.
     \item Strong performance on binary sentiment; neutral remains challenging.
   \end{itemize}
 
@@ -216,17 +207,18 @@
 \end{frame}
 
 % Thank You Slide
-\section*{}
 \begin{frame}{Thank You!}
+  \centering
   Questions or feedback?
 
+  \vspace{2em}
+
   Project Resources:
-  \vspace{-0.5em}
 
   {\footnotesize
   GitHub: {\texttt{\href{https://github.com/saileshbro/ai-proj}{github.com/saileshbro/ai-proj}}}}
 
-  \vspace{-1em}
+  \vspace{2em}
 
   We appreciate your time and attention!
 \end{frame}
