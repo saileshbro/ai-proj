@@ -102,48 +102,73 @@
 % Tokenization and Encoding
 \section{Tokenization and Encoding}
 \begin{frame}{Tokenizing with XLM-Roberta}
-  Advantages:
   \begin{itemize}
-    \item Supports over 100 languages including Nepali.
-    \item Context-aware encoding using self-attention.
-    \item Subword tokenization handles rare words and typos.
+    \item XLM-Roberta tokenizer is multilingual and supports Nepali language.
+    \item Key features of \texttt{tokenizer.batch\_encode\_plus}:
+          \begin{itemize}
+            \item Automatically handles padding and truncation for consistent input length.
+            \item Generates:
+                  \begin{itemize}
+                    \item \texttt{input\_ids}: Numerical representation of tokens.
+                    \item \texttt{attention\_mask}: Identifies non-padded tokens for focus.
+                  \end{itemize}
+          \end{itemize}
+    \item Attention masks ensure the model processes only relevant tokens. It tells the model which sentence is real and which is padding.
   \end{itemize}
+\end{frame}
+\begin{frame}{Understanding Tokenization and Encoding}
+  \begin{itemize}
+    \item Tokenizing is like chopping a sentence into Lego blocks that the model knows.
+    \item Encoding is turning those blocks into numbers so the model can do math with them.
+    \item Why It Matters:
+          \begin{itemize}
+            \item The model sees only numbers.
+            \item Tokenization keeps input size fixed (e.g., max\_length=256). Long texts are trimmed, short ones are padded.
+          \end{itemize}
+  \end{itemize}
+\end{frame}
 
-  Implementation:
-  \begin{itemize}
-    \item Used Hugging Face tokenizer from pretrained checkpoint.
-    \item Batch-encoded both train and test sets.
-  \end{itemize}
+\begin{frame}{Tokenization Example}
+  \centering
+  \includegraphics[width=1\linewidth]{example.png}
 \end{frame}
 
 % Model Architecture
 \section{Model Architecture}
 \begin{frame}{XLM-Roberta Model Details}
-  Model used: XLM-Roberta-Base
+  Transformers process all words at the same time (not one-by-one like RNN).
 
   Structure:
   \begin{itemize}
-    \item Pretrained encoder: XLM-Roberta
-    \item Classification head: Dense + Softmax layer
-    \item Output: Probabilities over 3 classes (Negative, Positive, Neutral)
+    \item XLM-R supports multiple languages, including Nepali, out of the box.
+    \item Fine-tuning was performed to adapt the model's top layers specifically for sentiment classification.
+    \item Produces probabilities for three sentiment classes: Negative, Positive, and Neutral.
   \end{itemize}
 
-  Training: PyTorch with mixed precision (autocast enabled)
+  Trained on: PyTorch with mixed precision (autocast enabled)
 \end{frame}
+
+\begin{frame}{Model Usage Example}
+  \centering
+  \includegraphics[width=0.85\linewidth]{example2.png}
+\end{frame}
+
 
 % Training Pipeline
 \section{Training Pipeline}
-\begin{frame}{Training Configuration}
-  Training setup:
-  \begin{itemize}
-    \item Optimizer: AdamW, LR = \(2\times10^{-5}\)
-    \item Epochs: 10, Batch size: 16
-    \item Loss Function: Cross-entropy
-    \item Platform: Google Colab (GPU)
-  \end{itemize}
+\begin{frame}{Main Workflow Steps}
+  \centering
+  \includegraphics[width=0.95\linewidth]{workflow.png}
+\end{frame}
 
-  Libraries used:
-  Hugging Face Transformers, PyTorch, scikit-learn, matplotlib.
+\begin{frame}{Training Loop}
+  \centering
+  \includegraphics[width=0.75\linewidth]{trainLoop.png}
+\end{frame}
+
+\begin{frame}{Deployment and Evaluation}
+  \centering
+  \includegraphics[width=0.95\linewidth]{deployment.png}
 \end{frame}
 
 % Results Plot
