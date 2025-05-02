@@ -10,6 +10,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
+  <!-- Google's Transliteration Input Tools -->
+  <script
+    src="https://cdn.jsdelivr.net/gh/KSubedi/transliteration-input-tools@latest/dist/transliteration-input.bundle.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -35,14 +38,14 @@
           },
         },
       },
-            };
-          </script>
-        <style>
-          /* Base Styles */
-          .text-area-height {
-            height: 120px;
-            transition: height 0.3s ease, box-shadow 0.3s ease;
-          }
+        };
+      </script>
+    <style>
+      /* Base Styles */
+      .text-area-height {
+        height: 120px;
+        transition: height 0.3s ease, box-shadow 0.3s ease;
+      }
 
     .text-area-height:focus {
       height: 150px;
@@ -230,6 +233,7 @@
     }
   </style>
 </head>
+
 <body class="font-sans text-gray-800 overflow-hidden">
   <div class="h-screen w-screen flex flex-col">
     <main class="flex-1 flex">
@@ -255,9 +259,9 @@
             <div class="emoji-container">
               <span class="emoji">😔</span>
             </div>
-            </div>
-            </div>
-            </div>
+          </div>
+          </div>
+          </div>
       <!-- Right Panel -->
       <div class="flex-1 overflow-auto bg-white p-6 lg:p-10 my-auto">
         <!-- Mobile Header -->
@@ -279,7 +283,7 @@
             <p class="text-primary-100 text-sm">
               Enter your Nepali text below to analyze its emotional tone
             </p>
-            </div>
+          </div>
 
           <div class="p-6">
             <div class="mb-6 relative">
@@ -289,14 +293,14 @@
               <div class="absolute right-4 bottom-4 text-xs text-gray-400" id="char-count">
                 0 characters
               </div>
-              </div>
+            </div>
 
             <div class="text-center">
               <button id="analyze-button"
                 class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-300 shadow-md hover:shadow-lg font-medium text-base hover:-translate-y-0.5 active:translate-y-0">
                 Analyze Sentiment
               </button>
-              </div>
+            </div>
 
             <!-- Results Container -->
             <div id="result" class="mt-8 hidden">
@@ -312,34 +316,34 @@
                       <div>
                         <h3 class="text-sm text-gray-600 mb-1">Sentiment:</h3>
                         <div class="font-bold text-2xl md:text-3xl mb-3" id="sentiment-text"></div>
-                        </div>
-                        <div class="bg-white py-2 px-4 rounded-full shadow-md" id="confidence-container">
+                      </div>
+                      <div class="bg-white py-2 px-4 rounded-full shadow-md" id="confidence-container">
                         <div class="text-xs text-gray-500 mb-1">
                           Confidence
                         </div>
                         <div class="font-bold" id="confidence-score"></div>
-                        </div>
-                        </div>
+                      </div>
+                      </div>
 
                     <div class="mt-4 pt-4 border-t border-gray-200">
                       <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div id="confidence-bar" class="bg-primary-600 h-2.5 rounded-full" style="width: 0%"></div>
                       </div>
                     </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
 
             <!-- Loading State -->
             <div id="loading" class="mt-8 text-center hidden loading-animation">
               <div class="inline-block">
                 <div class="loader"></div>
-                </div>
+              </div>
               <p class="mt-4 text-primary-800 font-medium">
                 Analyzing your text...
               </p>
-              </div>
+            </div>
 
             <!-- Error State -->
             <div id="error" class="mt-8 hidden shake-animation">
@@ -350,10 +354,10 @@
                 <p class="text-red-500">
                   We couldn't analyze your text. Please try again later.
                 </p>
-                </div>
-                </div>
-                </div>
-                </div>
+              </div>
+              </div>
+              </div>
+              </div>
 
         <!-- Features Section -->
         <div class="max-w-3xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -367,8 +371,7 @@
           <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 feature-card">
             <div class="text-primary-600 text-2xl mb-3">🎯</div>
             <h3 class="font-bold text-base mb-2">Accurate Results</h3>
-            <p class="text-gray-600 text-sm">
-              Trained on diverse Nepali language datasets.
+            Trained on diverse Nepali language datasets.
             </p>
           </div>
           <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 feature-card">
@@ -386,86 +389,116 @@
         </footer>
       </div>
     </main>
-    </div>
+  </div>
 
   <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              // DOM Elements
-              const analyzeButton = document.getElementById("analyze-button");
-              const textInput = document.getElementById("text-input");
-              const resultDiv = document.getElementById("result");
-              const loadingDiv = document.getElementById("loading");
-              const errorDiv = document.getElementById("error");
-              const emojiElement = document.getElementById("sentiment-emoji");
-              const sentimentElement = document.getElementById("sentiment-text");
-              const confidenceElement = document.getElementById("confidence-score");
-              const confidenceBar = document.getElementById("confidence-bar");
-              const charCount = document.getElementById("char-count");
-              const featureCards = document.querySelectorAll(".feature-card");
+        document.addEventListener("DOMContentLoaded", function () {
+          // DOM Elements
+          const analyzeButton = document.getElementById("analyze-button");
+          const textInput = document.getElementById("text-input");
+          const resultDiv = document.getElementById("result");
+          const loadingDiv = document.getElementById("loading");
+          const errorDiv = document.getElementById("error");
+          const emojiElement = document.getElementById("sentiment-emoji");
+          const sentimentElement = document.getElementById("sentiment-text");
+          const confidenceElement = document.getElementById("confidence-score");
+          const confidenceBar = document.getElementById("confidence-bar");
+          const charCount = document.getElementById("char-count");
+          const featureCards = document.querySelectorAll(".feature-card");
 
-              // Feature cards animation
-              featureCards.forEach((card, index) => {
-                card.style.opacity = "0";
-                card.style.transform = "translateY(20px)";
+        // Initialize Google Transliteration for Nepali typing
+        enableTransliteration(textInput, "ne");
 
-                setTimeout(() => {
-                  card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-                  card.style.opacity = "1";
-                  card.style.transform = "translateY(0)";
-                }, 300 + index * 150);
-              });
+        // Add toggle button for Nepali typing
+        const toggleContainer = document.createElement("div");
+        toggleContainer.className = "flex items-center justify-end mb-2 text-sm";
 
-            // Update character count
-            textInput.addEventListener("input", function () {
-              const count = textInput.value.length;
-            charCount.textContent = `${count} character${count !== 1 ? "s" : ""}`;
+        const toggleLabel = document.createElement("label");
+        toggleLabel.className = "inline-flex items-center cursor-pointer";
+        toggleLabel.innerHTML = `
+        <span class="mr-3 text-gray-600">Nepali Typing</span>
+        <div class="relative">
+          <input id="typing-toggle" type="checkbox" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+        </div>
+      `;
 
-            const intensity = Math.min(count / 100, 1) * 15;
-            textInput.style.boxShadow = `0 0 ${intensity}px rgba(14, 165, 233, 0.2)`;
+        toggleContainer.appendChild(toggleLabel);
+        textInput.parentElement.insertBefore(toggleContainer, textInput);
 
-            if (
-              this.value.length > 10 &&
-              !analyzeButton.classList.contains("pulse-once")
-            ) {
-              analyzeButton.classList.add("pulse-once");
-              analyzeButton.style.animation = "pulse 1s ease-in-out";
+        // Setup toggle functionality
+        const typingToggle = document.getElementById("typing-toggle");
+        typingToggle.addEventListener("change", function () {
+          if (this.checked) {
+            enableTransliteration(textInput, "ne");
+          } else {
+            disableTransliteration(textInput);
+          }
+        });
 
-              setTimeout(() => {
-                analyzeButton.style.animation = "";
-                analyzeButton.classList.remove("pulse-once");
-              }, 1000);
-            }
-          });
+        // Feature cards animation
+        featureCards.forEach((card, index) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
 
-            // Text input focus effects
-            textInput.addEventListener("focus", function () {
-              this.parentElement.classList.add("scale-105");
-              this.parentElement.style.transition = "transform 0.3s ease";
-            });
+        setTimeout(() => {
+          card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, 300 + index * 150);
+      });
 
-            textInput.addEventListener("blur", function () {
-              this.parentElement.classList.remove("scale-105");
-            });
+        // Update character count
+        textInput.addEventListener("input", function () {
+          const count = textInput.value.length;
+          charCount.textContent = `${count} character${count !== 1 ? "s" : ""}`;
 
-            // Button hover effects
-            analyzeButton.addEventListener("mouseenter", function () {
-              this.classList.add("shadow-lg");
-            });
+        const intensity = Math.min(count / 100, 1) * 15;
+        textInput.style.boxShadow = `0 0 ${intensity}px rgba(14, 165, 233, 0.2)`;
 
-            analyzeButton.addEventListener("mouseleave", function () {
-              this.classList.remove("shadow-lg");
-            });
+        if (
+          this.value.length > 10 &&
+          !analyzeButton.classList.contains("pulse-once")
+        ) {
+          analyzeButton.classList.add("pulse-once");
+          analyzeButton.style.animation = "pulse 1s ease-in-out";
 
-            // Analyze sentiment
-            async function analyzeSentiment() {
-              const text = textInput.value.trim();
+          setTimeout(() => {
+            analyzeButton.style.animation = "";
+            analyzeButton.classList.remove("pulse-once");
+          }, 1000);
+        }
+      });
 
-            if (!text) {
-            textInput.classList.add("ring-2", "ring-red-500", "border-red-500");
-            textInput.style.animation =
-              "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
+        // Text input focus effects
+        textInput.addEventListener("focus", function () {
+          this.parentElement.classList.add("scale-105");
+          this.parentElement.style.transition = "transform 0.3s ease";
+        });
 
-            setTimeout(() => {
+        textInput.addEventListener("blur", function () {
+          this.parentElement.classList.remove("scale-105");
+        });
+
+        // Button hover effects
+        analyzeButton.addEventListener("mouseenter", function () {
+          this.classList.add("shadow-lg");
+        });
+
+        analyzeButton.addEventListener("mouseleave", function () {
+          this.classList.remove("shadow-lg");
+        });
+
+        // Analyze sentiment
+        async function analyzeSentiment() {
+          const text = textInput.value.trim();
+
+        if (!text) {
+          textInput.classList.add("ring-2", "ring-red-500", "border-red-500");
+          textInput.style.animation =
+            "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
+
+          setTimeout(() => {
             textInput.classList.remove(
               "ring-2",
               "ring-red-500",
@@ -473,91 +506,93 @@
             );
             textInput.style.animation = "";
           }, 1500);
-            return;
-          }
+          return;
+        }
 
-            loadingDiv.classList.remove("hidden");
-            resultDiv.classList.add("hidden");
-            errorDiv.classList.add("hidden");
-            analyzeButton.disabled = true;
-            analyzeButton.classList.add("opacity-70");
+        loadingDiv.classList.remove("hidden");
+        resultDiv.classList.add("hidden");
+        errorDiv.classList.add("hidden");
+        analyzeButton.disabled = true;
+        analyzeButton.classList.add("opacity-70");
 
-            try {
-            // Call the actual API endpoint
-            const response = await fetch("/predict", {
-              method: "POST",
-              headers: {
+        try {
+          // Call the actual API endpoint
+          const response = await fetch("/predict", {
+            method: "POST",
+            headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ text }),
           });
 
-            if (!response.ok) {
+          if (!response.ok) {
             throw new Error("API response was not ok");
           }
 
-            const data = await response.json();
+          const data = await response.json();
 
-            // Display sentiment with emoji
-            let emoji = "😐";
-            let textColor = "text-amber-600";
-            let barColor = "bg-amber-600";
-              let containerBg = "bg-gradient-to-br from-amber-400 to-amber-600";
+          // Display sentiment with emoji
+          let emoji = "😐";
+          let textColor = "text-amber-600";
+          let barColor = "bg-amber-600";
+          let containerBg = "bg-gradient-to-br from-amber-400 to-amber-600";
 
-            if (data.sentiment === "Positive") {
-              emoji = "😊";
-              textColor = "text-green-600";
-              barColor = "bg-green-600";
-              containerBg = "bg-gradient-to-br from-green-400 to-green-700";
-            } else if (data.sentiment === "Negative") {
-              emoji = "😔";
-              textColor = "text-red-600";
-              barColor = "bg-red-600";
-              containerBg = "bg-gradient-to-br from-red-400 to-red-700";
-            }
+          if (data.sentiment === "Positive") {
+            emoji = "😊";
+            textColor = "text-green-600";
+            barColor = "bg-green-600";
+            containerBg = "bg-gradient-to-br from-green-400 to-green-700";
+          } else if (data.sentiment === "Negative") {
+            emoji = "😔";
+            textColor = "text-red-600";
+            barColor = "bg-red-600";
+            containerBg = "bg-gradient-to-br from-red-400 to-red-700";
+          }
 
-              // Update sentiment container and emoji
-              const sentimentContainer = document.getElementById("sentiment-container");
-              sentimentContainer.className = `emoji-container md:w-20 md:h-20 w-16 h-16 shadow-lg mb-3 md:mb-0 ${containerBg}`;
-            emojiElement.textContent = emoji;
-            sentimentElement.textContent = data.sentiment;
-            sentimentElement.className = `font-bold text-2xl md:text-3xl ${textColor}`;
+          // Update sentiment container and emoji
+          const sentimentContainer = document.getElementById(
+            "sentiment-container"
+          );
+          sentimentContainer.className = `emoji-container md:w-20 md:h-20 w-16 h-16 shadow-lg mb-3 md:mb-0 ${containerBg}`;
+          emojiElement.textContent = emoji;
+          sentimentElement.textContent = data.sentiment;
+          sentimentElement.className = `font-bold text-2xl md:text-3xl ${textColor}`;
 
-            // Format confidence score as percentage
-            const confidence = Math.round(data.score * 100);
-            confidenceElement.textContent = `${confidence}%`;
+          // Format confidence score as percentage
+          const confidence = Math.round(data.score * 100);
+          confidenceElement.textContent = `${confidence}%`;
 
-            // Update confidence bar with animation
-            confidenceBar.style.width = "0%";
-            confidenceBar.className = `h-2.5 rounded-full ${barColor}`;
+          // Update confidence bar with animation
+          confidenceBar.style.width = "0%";
+          confidenceBar.className = `h-2.5 rounded-full ${barColor}`;
 
-            setTimeout(() => {
+          setTimeout(() => {
             confidenceBar.style.transition = "width 0.8s ease-in-out";
             confidenceBar.style.width = `${confidence}%`;
           }, 100);
 
-            loadingDiv.classList.add("hidden");
-            resultDiv.classList.remove("hidden");
-          } catch (error) {
-            console.error("Error:", error);
-            loadingDiv.classList.add("hidden");
-            errorDiv.classList.remove("hidden");
-          } finally {
-            analyzeButton.disabled = false;
-              analyzeButton.classList.remove("opacity-70");
-            }
+          loadingDiv.classList.add("hidden");
+          resultDiv.classList.remove("hidden");
+        } catch (error) {
+          console.error("Error:", error);
+          loadingDiv.classList.add("hidden");
+          errorDiv.classList.remove("hidden");
+        } finally {
+          analyzeButton.disabled = false;
+          analyzeButton.classList.remove("opacity-70");
+        }
+      }
+
+        analyzeButton.addEventListener("click", analyzeSentiment);
+
+        textInput.addEventListener("keypress", function (event) {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            analyzeSentiment();
           }
-
-            analyzeButton.addEventListener("click", analyzeSentiment);
-
-            textInput.addEventListener("keypress", function (event) {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                analyzeSentiment();
-              }
-            });
         });
-    </script>
+      });
+      </script>
 </body>
 
 </html>
