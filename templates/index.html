@@ -409,32 +409,7 @@
         // Initialize Google Transliteration for Nepali typing
         enableTransliteration(textInput, "ne");
 
-        // Add toggle button for Nepali typing
-        const toggleContainer = document.createElement("div");
-        toggleContainer.className = "flex items-center justify-end mb-2 text-sm";
 
-        const toggleLabel = document.createElement("label");
-        toggleLabel.className = "inline-flex items-center cursor-pointer";
-        toggleLabel.innerHTML = `
-        <span class="mr-3 text-gray-600">Nepali Typing</span>
-        <div class="relative">
-          <input id="typing-toggle" type="checkbox" class="sr-only peer" checked>
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-        </div>
-      `;
-
-        toggleContainer.appendChild(toggleLabel);
-        textInput.parentElement.insertBefore(toggleContainer, textInput);
-
-        // Setup toggle functionality
-        const typingToggle = document.getElementById("typing-toggle");
-        typingToggle.addEventListener("change", function () {
-          if (this.checked) {
-            enableTransliteration(textInput, "ne");
-          } else {
-            disableTransliteration(textInput);
-          }
-        });
 
         // Feature cards animation
         featureCards.forEach((card, index) => {
