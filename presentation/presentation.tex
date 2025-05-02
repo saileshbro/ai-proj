@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usetheme{metropolis}
+\usepackage{caption}
 
 % Title Info
 \title{Nepali Sentiment Analysis of Post-COVID Data}
@@ -55,7 +56,7 @@
     \item Motivation:
           \begin{itemize}
             \item Nepali is underrepresented in NLP.
-            \item Lack of labeled Nepali datasets.
+            \item Enhance Accessibility for Nepali Language.
           \end{itemize}
     \item Objectives:
           \begin{enumerate}
@@ -69,34 +70,57 @@
 % Dataset Description
 \section{Dataset Description}
 \begin{frame}{About the Dataset}
-  \begin{itemize}
-    \item Source: Nepali COVID/post-COVID text samples.
-    \item Total Samples:
-          \begin{itemize}
-            \item Training: 33,602 samples
-            \item Testing: 8,401 samples
-          \end{itemize}
-    \item Labels: 0 = Negative, 1 = Positive, 2 = Neutral
-    \item Common issues:
-          \begin{itemize}
-            \item Invalid labels ('o', '-', etc.)
-            \item Missing values and noisy characters
-          \end{itemize}
-  \end{itemize}
+  \begin{columns}[T]
+    % Left column for text
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Source: Nepali COVID/post-COVID text samples.
+        \item Total Samples:
+              \begin{itemize}
+                \item Training: 33,602 samples
+                \item Testing: 8,401 samples
+              \end{itemize}
+        \item Labels: 0 = Negative, 1 = Positive, 2 = Neutral
+        \item Common issues:
+              \begin{itemize}
+                \item Invalid labels ('o', '-', etc.)
+                \item Missing values and noisy characters
+              \end{itemize}
+      \end{itemize}
+    \end{column}
+    
+    % Right column for figure
+    \begin{column}{0.45\textwidth}
+    \centering
+      \includegraphics[width=\textwidth]{DataSample.png}
+      \captionof{figure}{Data Sample}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % Preprocessing
 \section{Data Preprocessing}
 \begin{frame}{Data Cleaning Steps}
-  Steps we took:
-  \begin{enumerate}
-    \item Removed missing and malformed data.
-    \item Filtered invalid labels.
-    \item Tokenized using XLM-Roberta tokenizer.
-    \item Truncated inputs to max length of 256 tokens.
-  \end{enumerate}
-
-  Result: Clean, structured datasets ready for training/testing.
+  \begin{columns}[T]
+    % Left column for text
+    \begin{column}{0.5\textwidth}
+      Steps we took:
+      \begin{enumerate}
+        \item Removed missing and malformed data.
+        \item Filtered invalid labels.
+        \item Tokenized using XLM-Roberta tokenizer.
+        \item Truncated inputs to max length of 256 tokens.
+      \end{enumerate}
+      Result: Clean, structured datasets ready for training/testing.
+    \end{column}
+    
+    % Right column for figure
+    \begin{column}{0.25\textwidth}
+    \centering
+      \includegraphics[width=\textwidth]{TruncateReason.png}
+      \captionof{figure}{ Data Length}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % Tokenization and Encoding
@@ -131,6 +155,7 @@
 \begin{frame}{Tokenization Example}
   \centering
   \includegraphics[width=1\linewidth]{example.png}
+    \captionof{figure}{ Tokenization Example}
 \end{frame}
 
 % Model Architecture
@@ -150,7 +175,8 @@
 
 \begin{frame}{Model Usage Example}
   \centering
-  \includegraphics[width=0.85\linewidth]{example2.png}
+  \includegraphics[width=0.65\linewidth]{example2.png}
+    \captionof{figure}{Model Usage Example}
 \end{frame}
 
 
@@ -159,16 +185,19 @@
 \begin{frame}{Main Workflow Steps}
   \centering
   \includegraphics[width=0.95\linewidth]{workflow.png}
+    \captionof{figure}{ Workflow Steps}
 \end{frame}
 
 \begin{frame}{Training Loop}
   \centering
-  \includegraphics[width=0.75\linewidth]{trainLoop.png}
+  \includegraphics[width=0.55\linewidth]{trainLoop.png}
+    \captionof{figure}{ Training Loop}
 \end{frame}
 
 \begin{frame}{Deployment and Evaluation}
   \centering
   \includegraphics[width=0.95\linewidth]{deployment.png}
+    \captionof{figure}{ Deployment}
 \end{frame}
 
 % Results Plot
@@ -176,6 +205,7 @@
 \begin{frame}{Loss and Accuracy Over Epochs}
   \centering
   \includegraphics[width=0.75\linewidth]{training_metrics.png}
+    \captionof{figure}{ Loss and Accuracy}
 \end{frame}
 
 % Classification Report
@@ -204,13 +234,15 @@
 % Confusion Matrix Image (Optional)
 \begin{frame}{Confusion Matrix (Test Set)}
   \centering
-  \includegraphics[width=0.65\linewidth]{confusion_matrix.png}
+  \includegraphics[width=0.55\linewidth]{confusion_matrix.png}
+  \captionof{figure}{Confusion Matrix}
 \end{frame}
 
 % Sample Predictions Table (Optional)
 \begin{frame}{Sample Predictions on Unseen Data}
   \centering
   \includegraphics[width=0.75\linewidth]{visual.jpeg}
+    \captionof{figure}{Sample Prediction}
 \end{frame}
 
 % Conclusion slide
