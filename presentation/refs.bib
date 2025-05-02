@@ -1,4 +1,3 @@
-
 @inproceedings{devlin-etal-2019-bert,
   title     = {{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding},
   author    = {Devlin, Jacob  and
@@ -18,6 +17,7 @@
   pages     = {4171--4186},
   abstract  = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5 (7.7 point absolute improvement), MultiNLI accuracy to 86.7{\%} (4.6{\%} absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).}
 }
+
 @inproceedings{conneau-etal-2020-unsupervised,
   title     = {Unsupervised Cross-lingual Representation Learning at Scale},
   author    = {Conneau, Alexis  and
@@ -43,36 +43,6 @@
   doi       = {10.18653/v1/2020.acl-main.747},
   pages     = {8440--8451},
   abstract  = {This paper shows that pretraining multilingual language models at scale leads to significant performance gains for a wide range of cross-lingual transfer tasks. We train a Transformer-based masked language model on one hundred languages, using more than two terabytes of filtered CommonCrawl data. Our model, dubbed XLM-R, significantly outperforms multilingual BERT (mBERT) on a variety of cross-lingual benchmarks, including +14.6{\%} average accuracy on XNLI, +13{\%} average F1 score on MLQA, and +2.4{\%} F1 score on NER. XLM-R performs particularly well on low-resource languages, improving 15.7{\%} in XNLI accuracy for Swahili and 11.4{\%} for Urdu over previous XLM models. We also present a detailed empirical analysis of the key factors that are required to achieve these gains, including the trade-offs between (1) positive transfer and capacity dilution and (2) the performance of high and low resource languages at scale. Finally, we show, for the first time, the possibility of multilingual modeling without sacrificing per-language performance; XLM-R is very competitive with strong monolingual models on the GLUE and XNLI benchmarks. We will make our code and models publicly available.}
-}
-
-@inproceedings{raghu-etal-2019-disentangling,
-  title     = {{D}isentangling {L}anguage and {K}nowledge in {T}ask-{O}riented {D}ialogs},
-  author    = {Raghu, Dinesh  and
-               Gupta, Nikhil  and
-               Mausam},
-  editor    = {Burstein, Jill  and
-               Doran, Christy  and
-               Solorio, Thamar},
-  booktitle = {Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)},
-  month     = jun,
-  year      = {2019},
-  address   = {Minneapolis, Minnesota},
-  publisher = {Association for Computational Linguistics},
-  url       = {https://aclanthology.org/N19-1126/},
-  doi       = {10.18653/v1/N19-1126},
-  pages     = {1239--1255},
-  abstract  = {The Knowledge Base (KB) used for real-world applications, such as booking a movie or restaurant reservation, keeps changing over time. End-to-end neural networks trained for these task-oriented dialogs are expected to be immune to any changes in the KB. However, existing approaches breakdown when asked to handle such changes. We propose an encoder-decoder architecture (BoSsNet) with a novel Bag-of-Sequences (BoSs) memory, which facilitates the disentangled learning of the response`s language model and its knowledge incorporation. Consequently, the KB can be modified with new knowledge without a drop in interpretability. We find that BoSsNeT outperforms state-of-the-art models, with considerable improvements ({\ensuremath{>}}10{\%}) on bAbI OOV test sets and other human-human datasets. We also systematically modify existing datasets to measure disentanglement and show BoSsNeT to be robust to KB modifications.}
-}
-
-@article{article,
-  author  = {Sitaula, Chiranjibi and Ojha, Yadav},
-  year    = {2013},
-  month   = {01},
-  pages   = {171-174},
-  title   = {Semantic Sentence Similarity Using Finite State Machine},
-  volume  = {05},
-  journal = {Intelligent Information Management},
-  doi     = {10.4236/iim.2013.56018}
 }
 
 @inproceedings{wolf-etal-2020-transformers,
@@ -122,40 +92,6 @@
   url           = {https://arxiv.org/abs/1706.03762}
 }
 
-@misc{liu2019robertarobustlyoptimizedbert,
-  title         = {RoBERTa: A Robustly Optimized BERT Pretraining Approach},
-  author        = {Yinhan Liu and Myle Ott and Naman Goyal and Jingfei Du and Mandar Joshi and Danqi Chen and Omer Levy and Mike Lewis and Luke Zettlemoyer and Veselin Stoyanov},
-  year          = {2019},
-  eprint        = {1907.11692},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL},
-  url           = {https://arxiv.org/abs/1907.11692}
-}
-
-
-@inproceedings{ronnqvist-etal-2019-multilingual,
-    title = "Is Multilingual {BERT} Fluent in Language Generation?",
-    author = {R{\"o}nnqvist, Samuel  and
-      Kanerva, Jenna  and
-      Salakoski, Tapio  and
-      Ginter, Filip},
-    editor = {Nivre, Joakim  and
-      Derczynski, Leon  and
-      Ginter, Filip  and
-      Lindi, Bj{\o}rn  and
-      Oepen, Stephan  and
-      S{\o}gaard, Anders  and
-      Tidemann, J{\"o}rg},
-    booktitle = "Proceedings of the First NLPL Workshop on Deep Learning for Natural Language Processing",
-    month = sep,
-    year = "2019",
-    address = "Turku, Finland",
-    publisher = {Link{\"o}ping University Electronic Press},
-    url = "https://aclanthology.org/W19-6204/",
-    pages = "29--36",
-    abstract = "The multilingual BERT model is trained on 104 languages and meant to serve as a universal language model and tool for encoding sentences. We explore how well the model performs on several languages across several tasks: a diagnostic classification probing the embeddings for a particular syntactic property, a cloze task testing the language modelling ability to fill in gaps in a sentence, and a natural language generation task testing for the ability to produce coherent text fitting a given context. We find that the currently available multilingual BERT model is clearly inferior to the monolingual counterparts, and cannot in many cases serve as a substitute for a well-trained monolingual model. We find that the English and German models perform well at generation, whereas the multilingual model is lacking, in particular, for Nordic languages. The code of the experiments in the paper is available at: \url{https://github.com/TurkuNLP/bert-eval}"
-}
-
 @misc{loshchilov2019decoupledweightdecayregularization,
   title         = {Decoupled Weight Decay Regularization},
   author        = {Ilya Loshchilov and Frank Hutter},
@@ -181,7 +117,6 @@
   abstract  = {Nepali is a low-resource language with more than 40 million speakers worldwide. It is written in Devnagari script and has rich semantics and complex grammatical structure. To this date, multilingual models such as Multilingual BERT, XLM and XLM-RoBERTa haven{'}t been able to achieve promising results in Nepali NLP tasks, and there does not exist any such a large-scale monolingual corpus. This study presents NepBERTa, a BERT-based Natural Language Understanding (NLU) model trained on the most extensive monolingual Nepali corpus ever. We collected a dataset of 0.8B words from 36 different popular news sites in Nepal and introduced the model. This data set is 3 folds times larger than the previous publicly available corpus. We evaluated the performance of NepBERTa in multiple Nepali-specific NLP tasks, including Named-Entity Recognition, Content Classification, POS Tagging, and Sequence Pair Similarity. We also introduce two different datasets for two new downstream tasks and benchmark four diverse NLU tasks altogether. We bring all these four tasks under the first-ever Nepali Language Understanding Evaluation (Nep-gLUE) benchmark. We will make Nep-gLUE along with the pre-trained model and data sets publicly available for research.}
 }
 
-
 @misc{paszke2019pytorchimperativestylehighperformance,
   title         = {PyTorch: An Imperative Style, High-Performance Deep Learning Library},
   author        = {Adam Paszke and Sam Gross and Francisco Massa and Adam Lerer and James Bradbury and Gregory Chanan and Trevor Killeen and Zeming Lin and Natalia Gimelshein and Luca Antiga and Alban Desmaison and Andreas Köpf and Edward Yang and Zach DeVito and Martin Raison and Alykhan Tejani and Sasank Chilamkurthy and Benoit Steiner and Lu Fang and Junjie Bai and Soumith Chintala},
@@ -190,22 +125,6 @@
   archiveprefix = {arXiv},
   primaryclass  = {cs.LG},
   url           = {https://arxiv.org/abs/1912.01703}
-}
-
-@article{10.5555/1953048.2078195,
-  author     = {Pedregosa, Fabian and Varoquaux, Ga\"{e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, \'{E}douard},
-  title      = {Scikit-learn: Machine Learning in Python},
-  year       = {2011},
-  issue_date = {2/1/2011},
-  publisher  = {JMLR.org},
-  volume     = {12},
-  number     = {null},
-  issn       = {1532-4435},
-  abstract   = {Scikit-learn is a Python module integrating a wide range of state-of-the-art machine learning algorithms for medium-scale supervised and unsupervised problems. This package focuses on bringing machine learning to non-specialists using a general-purpose high-level language. Emphasis is put on ease of use, performance, documentation, and API consistency. It has minimal dependencies and is distributed under the simplified BSD license, encouraging its use in both academic and commercial settings. Source code, binaries, and documentation can be downloaded from http://scikit-learn.sourceforge.net.},
-  journal    = {J. Mach. Learn. Res.},
-  month      = nov,
-  pages      = {2825–2830},
-  numpages   = {6}
 }
 
 @misc{aayam_ojha_2023,
@@ -260,12 +179,45 @@
   doi     = {10.36548/jaicn.2021.3.001}
 }
 
-@misc{he2021debertadecodingenhancedbertdisentangled,
-  title         = {DeBERTa: Decoding-enhanced BERT with Disentangled Attention},
-  author        = {Pengcheng He and Xiaodong Liu and Jianfeng Gao and Weizhu Chen},
-  year          = {2021},
-  eprint        = {2006.03654},
+@article{scikit-learn,
+  title   = {Scikit-learn: Machine Learning in {P}ython},
+  author  = {Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V. and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P. and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+  journal = {Journal of Machine Learning Research},
+  volume  = {12},
+  pages   = {2825--2830},
+  year    = {2011}
+}
+
+@misc{priya2020mixed,
+  title         = {Mixed Precision Training With 16-bit Arithmetic Boosts Deep Learning Performance},
+  author        = {Priya Goyal and Paulius Micikevicius and Sagar Narang and Jonah Alben},
+  year          = {2020},
+  howpublished  = {\url{https://developer.nvidia.com/blog/mixed-precision-training-deep-neural-networks/}},
+  note          = {Accessed: 2025-05-02}
+}
+
+@misc{gradientaccu2018nvidia,
+  title         = {Training With Mixed Precision},
+  author        = {NVIDIA Developer},
+  year          = {2018},
+  howpublished  = {\url{https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html}},
+  note          = {Accessed: 2025-05-02}
+}
+
+@inproceedings{mckinney-proc-scipy-2010,
+  author    = {Wes McKinney},
+  title     = {Data Structures for Statistical Computing in Python},
+  booktitle = {Proceedings of the 9th Python in Science Conference},
+  pages     = {51--56},
+  year      = {2010},
+  editor    = {St\'efan van der Walt and Jarrod Millman}
+}
+
+@article{liu2019roberta,
+  title         = {RoBERTa: A Robustly Optimized BERT Pretraining Approach},
+  author        = {Yinhan Liu and Myle Ott and Naman Goyal and Jingfei Du and Mandar Joshi and Danqi Chen and Omer Levy and Mike Lewis and Luke Zettlemoyer and Veselin Stoyanov},
+  year          = {2019},
+  eprint        = {1907.11692},
   archiveprefix = {arXiv},
-  primaryclass  = {cs.CL},
-  url           = {https://arxiv.org/abs/2006.03654}
+  primaryclass  = {cs.CL}
 }

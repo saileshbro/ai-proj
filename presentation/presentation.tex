@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{booktabs}
 \usetheme{metropolis}
 \usepackage{caption}
 
@@ -32,7 +33,7 @@
 \section{Introduction}
 \begin{frame}{What is Sentiment Analysis?}
   \begin{itemize}
-    \item Sentiment analysis classifies text based on emotion or opinion.
+    \item Sentiment analysis classifies text based on emotion or opinion \parencite{article}.
     \item Categories:
           \begin{itemize}
             \item Positive — praise, approval
@@ -74,7 +75,7 @@
     % Left column for text
     \begin{column}{0.5\textwidth}
       \begin{itemize}
-        \item Source: Nepali COVID/post-COVID text samples.
+        \item Source: Nepali COVID/post-COVID text samples \parencite{aayam_ojha_2023,ajhesh72022nepali,shushant2021nepalisentiment,mahesh2022nepali}.
         \item Total Samples:
               \begin{itemize}
                 \item Training: 33,602 samples
@@ -88,7 +89,7 @@
               \end{itemize}
       \end{itemize}
     \end{column}
-    
+
     % Right column for figure
     \begin{column}{0.45\textwidth}
     \centering
@@ -113,7 +114,7 @@
       \end{enumerate}
       Result: Clean, structured datasets ready for training/testing.
     \end{column}
-    
+
     % Right column for figure
     \begin{column}{0.25\textwidth}
     \centering
@@ -127,7 +128,7 @@
 \section{Tokenization and Encoding}
 \begin{frame}{Tokenizing with XLM-Roberta}
   \begin{itemize}
-    \item XLM-Roberta tokenizer is multilingual and supports Nepali language.
+    \item XLM-Roberta tokenizer is multilingual and supports Nepali language \parencite{conneau-etal-2020-unsupervised}.
     \item Key features of \texttt{tokenizer.batch\_encode\_plus}:
           \begin{itemize}
             \item Automatically handles padding and truncation for consistent input length.
@@ -161,16 +162,16 @@
 % Model Architecture
 \section{Model Architecture}
 \begin{frame}{XLM-Roberta Model Details}
-  Transformers process all words at the same time (not one-by-one like RNN).
+  Transformers process all words at the same time (not one-by-one like RNN) \parencite{vaswani2023attentionneed}.
 
   Structure:
   \begin{itemize}
-    \item XLM-R supports multiple languages, including Nepali, out of the box.
-    \item Fine-tuning was performed to adapt the model's top layers specifically for sentiment classification.
+    \item XLM-R supports multiple languages, including Nepali, out of the box \parencite{conneau-etal-2020-unsupervised}.
+    \item Fine-tuning was performed to adapt the model's top layers specifically for sentiment classification \parencite{devlin-etal-2019-bert,liu2019roberta}.
     \item Produces probabilities for three sentiment classes: Negative, Positive, and Neutral.
   \end{itemize}
 
-  Trained on: PyTorch with mixed precision (autocast enabled)
+  Trained on: PyTorch with mixed precision (autocast enabled) \parencite{paszke2019pytorchimperativestylehighperformance,priya2020mixed}
 \end{frame}
 
 \begin{frame}{Model Usage Example}
@@ -186,12 +187,17 @@
   \centering
   \includegraphics[width=0.95\linewidth]{workflow.png}
     \captionof{figure}{ Workflow Steps}
+
+\vspace{-0.5em}
+\footnotesize{Implementation using PyTorch \parencite{paszke2019pytorchimperativestylehighperformance} and Transformers library \parencite{wolf-etal-2020-transformers}}
 \end{frame}
 
 \begin{frame}{Training Loop}
   \centering
   \includegraphics[width=0.55\linewidth]{trainLoop.png}
     \captionof{figure}{ Training Loop}
+
+\footnotesize{Optimizer: AdamW \parencite{loshchilov2019decoupledweightdecayregularization}}
 \end{frame}
 
 \begin{frame}{Deployment and Evaluation}
@@ -272,7 +278,7 @@
 \begin{frame}{Conclusion and Future Work}
   Key Takeaways:
   \begin{itemize}
-    \item Trained a sentiment classifier on Nepali-language text using XLM-Roberta.
+    \item Trained a sentiment classifier on Nepali-language text using XLM-Roberta \parencite{conneau-etal-2020-unsupervised,timilsina-etal-2022-nepberta}.
     \item Achieved ~74\% of overall accuracy.
     \item Strong performance on binary sentiment; neutral remains challenging.
   \end{itemize}
@@ -281,7 +287,7 @@
   \begin{enumerate}
     \item Larger or augmented datasets.
     \item Additional validation set for tuning.
-    \item Model deployment as an API/web service.
+    \item Model deployment as an API/web service \parencite{fastapi}.
   \end{enumerate}
 \end{frame}
 
@@ -301,5 +307,10 @@
 
   We appreciate your time and attention!
 \end{frame}
+
+\begin{frame}[allowframebreaks]
+  \printbibliography
+\end{frame}
+
 
 \end{document}
