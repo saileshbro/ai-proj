@@ -232,10 +232,32 @@
 \end{frame}
 
 % Confusion Matrix Image (Optional)
-\begin{frame}{Confusion Matrix (Test Set)}
-  \centering
-  \includegraphics[width=0.55\linewidth]{confusion_matrix.png}
-  \captionof{figure}{Confusion Matrix}
+\begin{frame}{Model Performance on Test Set}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[width=1.0\linewidth]{confusion_matrix.png}
+      \captionof{figure}{Confusion Matrix}
+    \end{column}
+    \begin{column}{0.35\textwidth}
+      \centering
+      \scriptsize
+      \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        & \textbf{prec} & \textbf{recall} & \textbf{f1} & \textbf{support} \\
+        \midrule
+        Neg (0) & 0.80 & 0.74 & 0.77 & 3282 \\
+        Pos (1) & 0.78 & 0.83 & 0.80 & 3725 \\
+        Neut (2) & 0.52 & 0.52 & 0.52 & 1394 \\
+        \midrule
+        accuracy & & & 0.74 & 8401 \\
+        macro avg & 0.70 & 0.70 & 0.70 & 8401 \\
+        weighted avg & 0.74 & 0.74 & 0.74 & 8401 \\
+        \bottomrule
+      \end{tabular}
+      \captionof{table}{Classification Report}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % Sample Predictions Table (Optional)
